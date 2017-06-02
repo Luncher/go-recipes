@@ -1,12 +1,16 @@
-// package main
+package main
 
-// import (
-// 	"fmt"
-// 	"lru/list"
-// )
+import (
+	"fmt"
+	"lru/list"
+)
 
-// const MAX_SIZE = 3
-
-// func main () int {
-// 	LruCache * lru.NewLRUCache(MAX_SIZE)
-// }
+func main () {
+	const maxSize = 3
+	manager := list.NewLRUCacheManager(maxSize)
+	manager.Append(3)
+	manager.Append(2)
+	manager.Append(1)
+	values := manager.List()
+	fmt.Println("values:", values)
+}

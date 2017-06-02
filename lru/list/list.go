@@ -1,4 +1,4 @@
-package lrulist
+package list
 
 import (
 	"errors"
@@ -26,7 +26,7 @@ func (manager *LRUCacheManager) FindIndex(v interface {}) int {
 	return -1
 }
 
-func (manager *LRUCacheManager) Push(v interface {}) {
+func (manager *LRUCacheManager) Append(v interface {}) {
 	size := manager.MaxSize
 	index := manager.FindIndex(v)
 
@@ -65,10 +65,10 @@ func (manager *LRUCacheManager) Cap() int {
 }
 
 func (manager *LRUCacheManager) List() []interface{} {
-	var list = make([] interface {}, len(manager.Items))
+	var list = make([] interface {}, 0, len(manager.Items))
 
-	for value, _ := range manager.Items {
-		list = append(list, value)
+	for _, it := range manager.Items {
+		list = append(list, it.value)
 	}
 	return list
 }
