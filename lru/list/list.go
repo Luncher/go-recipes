@@ -10,7 +10,7 @@ type LRUCache struct {
 
 type LRUCacheManager struct {
 	MaxSize int
-	items []LRUCache
+	Items []LRUCache
 }
 
 func NewLRUCacheManager(size int)  *LRUCacheManager {
@@ -18,7 +18,7 @@ func NewLRUCacheManager(size int)  *LRUCacheManager {
 }
 
 func (manager *LRUCacheManager) FindIndex(v interface {}) int {
-	for index, value := range manager.items {
+	for index, value := range manager.Items {
 		if value == v {
 			return index
 		}
@@ -31,28 +31,28 @@ func (manager *LRUCacheManager) Push(v interface {}) {
 	index := manager.FindIndex(v)
 
 	if index != -1 {
-		item := manager.items[index]
-		manager.items = append(manager.items[0:index], manager.items[index:]...)
-		manager.items = append(manager.items, item)
+		item := manager.Items[index]
+		manager.Items = append(manager.Items[0:index], manager.Items[index:]...)
+		manager.Items = append(manager.Items, item)
 	} else {
-		if size >= len(manager.items) {
-			manager.items = manager.items[1:size]
+		if size >= len(manager.Items) {
+			manager.Items = manager.Items[1:size]
 		}
 		item := LRUCache{v}
-		manager.items = append(manager.items, item)
+		manager.Items = append(manager.Items, item)
 	}
 }
 
 func (manager *LRUCacheManager) Get(index int) (interface {}, error) {
-	if index >= len(manager.items) || index < 0 {
+	if index >= len(manager.Items) || index < 0 {
 		return nil, errors.New("Not Found Item by index")
 	} else {
-		return manager.items[index].value, nil
+		return manager.Items[index].value, nil
 	}
 }
 
 func (manager *LRUCacheManager) Len() int {
-	return len(manager.items)
+	return len(manager.Items)
 }
 
 func (manager *LRUCacheManager) Rest() int {
@@ -65,9 +65,9 @@ func (manager *LRUCacheManager) Cap() int {
 }
 
 func (manager *LRUCacheManager) List() []interface{} {
-	var list = make([] interface {}, len(manager.items))
+	var list = make([] interface {}, len(manager.Items))
 
-	for value, _ := range manager.items {
+	for value, _ := range manager.Items {
 		list = append(list, value)
 	}
 	return list
